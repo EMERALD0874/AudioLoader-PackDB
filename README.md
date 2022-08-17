@@ -121,3 +121,10 @@ To replace a sound file, remove its entry from the above array and place a sound
 - `ui_steam_message_old_smooth.m4a` - Played when receiving a chat message.
 - `ui_steam_smoother_friend_join.m4a` - Unknown or unused.
 - `ui_steam_smoother_friend_online.m4a` - Unknown or unused.
+
+## Testing your pack
+Once you have completed creating your pack, upload the folder containing it to the `/home/deck/homebrew/sounds` folder. If the sounds folder does not exist, you may not have the Audio Loader plugin properly installed. Depending on the type of pack you created, you should be able to find it in the music or sounds dropdowns. Select your pack and test it by either testing the functionality of each sound or using the [Decky Playground Plugin](https://github.com/SteamDeckHomebrew/decky-playground).
+
+# Uploading a pack to the Pack Browser
+Uploading your pack requires some basic Git knowledge. If you have trouble understanding the instructions below, feel free to reach out to us or another developer familiar with Git for support.
+1. Create a fork of this repository. You can do this using the Fork button at the top-right corner.
