@@ -128,3 +128,22 @@ Once you have completed creating your pack, upload the folder containing it to t
 # Uploading a pack to the Pack Browser
 Uploading your pack requires some basic Git knowledge. If you have trouble understanding the instructions below, feel free to reach out to us or another developer familiar with Git for support.
 1. Create a fork of this repository. You can do this using the Fork button at the top-right corner.
+1. (Optional) Create and upload a square JPG preview image in `/images/{AUTHOR}`.
+1. Create and upload a JSON file in `/themes` titled `{AUTHOR}-{PACK_NAME}.json` that follows this template.
+```json
+{
+  "repo_url": "https://github.com/AuthorGoesHere/RepoNameGoesHere",
+  "repo_subpath": "FolderWherePackIsGoesHere",
+  "repo_commit": "a1b2c3",
+  "preview_image_path": "images/{AUTHOR}/{IMAGE_NAME}.jpg"
+}
+```
+4. (Optional) Test your pack submission by running `py main.py` in the repository folder.
+    - Python and the Git CLI need to be installed.
+    - If you are missing Python libraries, run `pip install -r requirements.txt`.
+    - If the script throws no exceptions, you are ready to commit.
+1. Commit your changes and repeat for as many packs as you plan to upload.
+1. Create a pull request from your fork to the main repository.
+
+# Support
+If you need any help creating or submitting a pack, please use [the Steam Deck Homebrew Discord server](https://discord.gg/ZU74G2NJzk). Please use the Audio Loader Support thread in the #support-plugins channel.
