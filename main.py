@@ -285,7 +285,7 @@ class Repo:
                 filePath = os.path.join(path, file)
                 size = os.path.getsize(filePath)
                 totalSize += size
-                print(f"{x} is {size} bytes.")
+                print(f"{file} is {size} bytes.")
 
         print(f"Total pack size is {totalSize} bytes")
 
