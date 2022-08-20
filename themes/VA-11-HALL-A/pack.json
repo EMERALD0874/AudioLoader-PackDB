@@ -1,0 +1,14 @@
+{
+  "name": "VA-11 HALL-A",
+  "description": "Sound Effects from VA-11 HALL-A: Cyberpunk Bartender Action.",
+  "author": "Starlogical",
+  "version": "v1.1",
+  "manifest_version": 1,
+  "music": false,
+  "ignore": [
+    "steam_at_mention.m4a",
+    "steam_chatroom_notification.m4a",
+    "ui_steam_smoother_friend_join.m4a",
+    "ui_steam_smoother_friend_online.m4a"
+  ]
+}
