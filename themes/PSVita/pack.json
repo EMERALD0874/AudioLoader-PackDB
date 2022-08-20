@@ -1,0 +1,14 @@
+{
+  "name": "PSVita",
+  "description": "Sound Effects from the PlayStation Vita.",
+  "author": "Starlogical",
+  "version": "v1.0",
+  "manifest_version": 1,
+  "music": false,
+  "ignore": [
+    "steam_at_mention.m4a",
+    "steam_chatroom_notification.m4a",
+    "ui_steam_smoother_friend_join.m4a",
+    "ui_steam_smoother_friend_online.m4a"
+  ]
+}
