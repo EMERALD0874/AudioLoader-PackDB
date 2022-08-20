@@ -8,4 +8,5 @@ https://github.com/EMERALD0874/AudioLoader-PackDB
 
 # Credits!
 VA-11 HALL-A SFX - Sukeban Games
+
 PS Vita Sound Effects - Sony
