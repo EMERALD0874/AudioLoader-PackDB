@@ -34,7 +34,7 @@ class B2Bucket():
     def getFileUrl(self, fileName : str) -> str:
         for x in self.files:
             if x.key == fileName:
-                return f"{self.resource.ENDPOINT}/{x.bucket_name}/{x.key}"
+                return f"https://cdn.eme.wtf/file/{x.bucket_name}/{x.key}"
 
         return None
     
