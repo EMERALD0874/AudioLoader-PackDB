@@ -106,7 +106,7 @@ if (UPLOAD_FILES):
 
 class MegaJson():
     def __init__(self):
-        self.megaJson = requests.get("https://github.com/EMERALD0874/AudioLoader-PackDB/releases/download/1.0.0/packs.json").json()
+        self.megaJson = requests.get("https://github.com/EMERALD0874/AudioLoader-PackDB/releases/download/1.1.0/packs.json").json()
 
     def getMegaJsonEntry(self, packId : str) -> dict:
         for x in self.megaJson:
@@ -337,7 +337,7 @@ class Repo:
                 if (not os.path.exists(join(self.packPath, x)) and x not in self.ignore) or (os.path.exists(join(self.packPath, x)) and x in self.ignore):
                     raise Exception(f"Pack is missing {x}.")
         else:
-            if (not os.path.exists(join(self.packPath, "menu_music.mp3"))) or (os.path.exists(join(self.packPath, "menu_music.mp3"))):
+            if not os.path.exists(join(self.packPath, "menu_music.mp3")):
                 raise Exception(f"Pack is missing menu_music.mp3.")
 
 packs = []
