@@ -14,6 +14,42 @@ files = [f for f in listdir("./packs") if isfile(join("./packs", f)) and f.endsw
 UPLOAD_FILES = "upload" in sys.argv
 FORCE_REFRESH = "force" in sys.argv
 
+SOUND_FILES = [
+    "bumper_end.wav",
+    "confirmation_negative.wav",
+    "confirmation_positive.wav",
+    "deck_ui_achievement_toast.wav",
+    "deck_ui_bumper_end_02.wav",
+    "deck_ui_default_activation.wav",
+    "deck_ui_hide_modal.wav",
+    "deck_ui_into_game_detail.wav",
+    "deck_ui_launch_game.wav",
+    "deck_ui_message_toast.wav",
+    "deck_ui_misc_01.wav",
+    "deck_ui_misc_08.wav",
+    "deck_ui_misc_10.wav",
+    "deck_ui_navigation.wav",
+    "deck_ui_out_of_game_detail.wav",
+    "deck_ui_show_modal.wav",
+    "deck_ui_side_menu_fly_in.wav",
+    "deck_ui_side_menu_fly_out.wav",
+    "deck_ui_slider_down.wav",
+    "deck_ui_slider_up.wav",
+    "deck_ui_switch_toggle_off.wav",
+    "deck_ui_switch_toggle_on.wav",
+    "deck_ui_tab_transition_01.wav",
+    "deck_ui_tile_scroll.wav",
+    "deck_ui_toast.wav",
+    "deck_ui_typing.wav",
+    "deck_ui_volume.wav",
+    "pop_sound.wav",
+    "steam_at_mention.m4a",
+    "steam_chatroom_notification.m4a",
+    "ui_steam_message_old_smooth.m4a",
+    "ui_steam_smoother_friend_join.m4a",
+    "ui_steam_smoother_friend_online.m4a",
+]
+
 # Stolen from https://github.com/suchmememanyskill/CssLoader-ThemeDb/blob/main/main.py who stole from https://github.com/backblaze-b2-samples/b2-python-s3-sample/blob/main/sample.py
 class B2Bucket():
     def __init__(self, b2Connection, bucket):
@@ -70,7 +106,7 @@ if (UPLOAD_FILES):
 
 class MegaJson():
     def __init__(self):
-        self.megaJson = requests.get("https://github.com/EMERALD0874/AudioLoader-PackDB/releases/download/1.0.0/packs.json").json()
+        self.megaJson = requests.get("https://github.com/EMERALD0874/AudioLoader-PackDB/releases/download/1.1.0/packs.json").json()
 
     def getMegaJsonEntry(self, packId : str) -> dict:
         for x in self.megaJson:
@@ -248,11 +284,14 @@ class Repo:
         self.music = bool(json["music"]) if "music" in json else self.music
         self.manifestVersion = int(json["manifest_version"]) if "manifest_version" in json else 1
         self.description = str(json["description"]) if "description" in json else ""
+        self.ignore = str(json["ignore"]) if "ignore" in json else []
 
     def verify(self):
+        # Verify JSON was loaded
         if self.json is None:
             raise Exception("No JSON was loaded.")
         
+        # Verify various attributes
         if self.name is None:
             raise Exception("Pack has no name.")
         
@@ -262,6 +301,7 @@ class Repo:
         if (self.music is None):
             raise Exception("Pack does not specify if it's for music or not.")
 
+        # Remove any files that are in the ignore list
         ignorePath = join(self.packPath, "ignore.json") if os.path.exists(join(self.packPath, "ignore.json")) else "ignore.json"
 
         with open(ignorePath, "r") as fp:
@@ -277,20 +317,28 @@ class Repo:
                 os.remove(join(self.packPath, x))
                 print(f"Removing {x} from pack.")
 
-        expectedFiles = [join(self.packPath, "pack.json")]
-
+        # Check files to ensure they are below the size limit
         totalSize = 0
         for path, dirs, files in os.walk(self.packPath):
             for file in files:
                 filePath = os.path.join(path, file)
                 size = os.path.getsize(filePath)
                 totalSize += size
-                print(f"{file} is {size} bytes.")
+                print(f"- {file} is {round(size/1000000, 2)} MB ({size} B).")
 
-        print(f"Total pack size is {totalSize} bytes")
+        print(f"Total pack size is {round(totalSize/1000000, 2)} MB ({totalSize} B).")
 
         if (totalSize > 0xA00000): # 10 MB max per pack. This should be a generous amount
             raise Exception("Total pack size exceeds 10 MB. If your pack is larger than this in good faith, please let the maintainer(s) know.")
+
+        # Make sure all entries in SOUND_FILES are present OR in self.ignore
+        if self.music is False:
+            for x in SOUND_FILES:
+                if (not os.path.exists(join(self.packPath, x)) and x not in self.ignore) or (os.path.exists(join(self.packPath, x)) and x in self.ignore):
+                    raise Exception(f"Pack is missing {x}.")
+        else:
+            if not os.path.exists(join(self.packPath, "menu_music.mp3")):
+                raise Exception(f"Pack is missing menu_music.mp3.")
 
 packs = []
 

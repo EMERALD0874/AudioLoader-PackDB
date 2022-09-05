@@ -43,7 +43,22 @@ Please follow these guidelines when changing variables inside your manifest.
 This is where the guide will split in two. If you are looking to add background music to the Steam UI, please read the **Music packs** section. If you are looking to replace existing Steam UI sounds, please read the **Sound packs** section.
 
 ### Music packs
-Music packs are not currently implemented in the Audio Loader. Please check back once the feature has been implemented for a guide.
+Music packs are background tracks for the Steam UI. Whenever a user does not have an application running, the active music pack will play indefinitely until an application is launched.
+
+When creating a music pack, the first thing you should always have in mind is that this is a background track, not a general music player. Consider using ambience and instrumental songs rather than heavy hitting songs or anything with lyrics. Exceptions can be made but they shouldn't be expected.
+
+Once you have found a song that you want to use for your pack, make the following changes to your `pack.json`.
+- Change `name` to the exact song name. Don't use descriptions like "This Character's Theme".
+- Use `description` to credit the source. You can also list where it appears in a game if applicable (ex. Dr. Maruki's theme from...).
+- Make sure `music` is set to true.
+
+Next, find an audio file for the song you would like to use. Using an audio editing program (ex. Audacity), do the following.
+- Make the song loop as seamlessly as possible. If you can't do this, please merge any pull requests doing so in your repo.
+- Decrease the volume of the song by 10dB. In Audacity, select Effect and Amplify. Enter -10 as the New Peak Amplitude.
+  - Keep in mind that your music pack will be denied if sound packs cannot be heard over it.
+- Save your song as `menu_music.mp3` in your pack directory. In Audacity, select File, Export, and Export as MP3.
+
+When uploading your music pack, please try to use the cover art for the album you retrieved the song from (more info about this below). For a video game, this should be the cover of the original soundtrack and not the box art for the game itself.
 
 ### Sound packs
 To start, you will need to find the folder containing the Steam UI sounds. This can be found at `/home/deck/.local/share/Steam/steamui/sounds` on your Steam Deck. [If you have run the Steam Deck UI on another device](https://www.youtube.com/watch?v=1IAbZte8e7E), you can find the sounds at `{STEAM_INSTALLATION}/steamui/sounds`. **DO NOT MODIFY THESE FILES UNDER ANY CIRCUMSTANCE.** Modifying your Steam files is destructive and could lead to problems in the future. Using Audio Loader to manage your sound replacements is the safest way to avoid any potential issues.
