@@ -36,7 +36,7 @@ Please follow these guidelines when changing variables inside your manifest.
 - `author` -  This can be any name. We recommend using your GitHub username so users can easily report an issue if needed.
 - `version` - This should follow the format of `v{MAJOR}.{MINOR}`. Major updates are usually new inclusions to the theme that help complete it. Minor updates are usually updates to poor or unintentionally missing audio or adding support for a new version of SteamOS.
 - `manifest_version` - This should always reflect the latest manifest version available in this guide. Newer manifest versions provide additional features only available on newer installations. Make sure to check this README for a guide on updating versions.
-- `music` - This determines whether your pack displays as music or Steam UI sound replacements. At the time of writing this guide, music is not supported and is planned for a future update.
+- `music` - This determines whether your pack displays as music or Steam UI sound replacements.
 - `ignore` - This controls which Steam UI sound files will not be customized if creating a sound pack. This is necessary if not replacing all sounds.
 
 ## Adding sound files
@@ -144,7 +144,7 @@ Once you have completed creating your pack, upload the folder containing it to t
 Uploading your pack requires some basic Git knowledge. If you have trouble understanding the instructions below, feel free to reach out to us or another developer familiar with Git for support.
 1. Create a fork of this repository. You can do this using the Fork button at the top-right corner.
 1. (Optional) Create and upload a square JPG preview image in `/images/{AUTHOR}`.
-1. Create and upload a JSON file in `/themes` titled `{AUTHOR}-{PACK_NAME}.json` that follows this template.
+1. Create and upload a JSON file in `/packs` titled `{AUTHOR}-{PACK_NAME}.json` that follows this template.
 ```json
 {
   "repo_url": "https://github.com/AuthorGoesHere/RepoNameGoesHere",
