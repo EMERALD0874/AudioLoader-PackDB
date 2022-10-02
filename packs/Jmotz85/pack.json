@@ -1,9 +1,0 @@
-{
-  "name": "Halo Theme",
-  "description": "Halo Theme Music",
-  "author": "jmotz85",
-  "version": "v1.0",
-  "manifest_version": 1,
-  "music": true,
-  "ignore": []
-}
