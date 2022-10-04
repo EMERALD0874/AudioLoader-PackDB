@@ -222,24 +222,29 @@ class Repo:
     
     def get(self):
         tempDir = tempfile.TemporaryDirectory()
-        print(f"Cloning {self.repoReference.repoUrl} into {tempDir.name}...")
-        subprocess.run([
-            "git",
-            "clone",
-            self.repoReference.repoUrl,
-            tempDir.name
-        ], check=True)
+        if self.repoReference.repoUrl != "LOCAL":
+            print(f"Cloning {self.repoReference.repoUrl} into {tempDir.name}...")
+            subprocess.run([
+                "git",
+                "clone",
+                self.repoReference.repoUrl,
+                tempDir.name
+            ], check=True)
 
-        subprocess.run([
-            "git",
-            "-C",
-            tempDir.name,
-            "reset",
-            "--hard",
-            self.repoReference.repoCommit
-        ], check=True)
+            subprocess.run([
+                "git",
+                "-C",
+                tempDir.name,
+                "reset",
+                "--hard",
+                self.repoReference.repoCommit
+            ], check=True)
 
-        self.packPath = join(tempDir.name, self.repoReference.repoSubpath)
+            self.packPath = join(tempDir.name, self.repoReference.repoSubpath)
+        else:
+            shutil.copytree(self.repoReference.repoSubpath, join(tempDir.name, "pack"))
+            self.packPath = join(tempDir.name, "pack")
+
         packDataPath = join(self.packPath, "pack.json")
 
         if not os.path.exists(packDataPath):
