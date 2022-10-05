@@ -345,7 +345,7 @@ packs = []
 for x in files:
     path = join("./packs", x)
     print(f"Processing {path}...")
-    with open(path, "r") as fp:
+    with open(path, "r", encoding='utf-8') as fp:
         data = json.load(fp)
 
     reference = RepoReference(data, path)
