@@ -23,7 +23,7 @@ To start, create a GitHub repository with a folder inside named after your pack.
   "description": "Use this field to describe the pack.",
   "author": "GitHubUsername",
   "version": "v1.0",
-  "manifest_version": 1,
+  "manifest_version": 2,
   "music": false,
   "ignore": [],
   "mappings": {}
