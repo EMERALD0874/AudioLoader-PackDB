@@ -25,7 +25,8 @@ To start, create a GitHub repository with a folder inside named after your pack.
   "version": "v1.0",
   "manifest_version": 1,
   "music": false,
-  "ignore": []
+  "ignore": [],
+  "mappings": {}
 }
 ```
 
@@ -38,6 +39,7 @@ Please follow these guidelines when changing variables inside your manifest.
 - `manifest_version` - This should always reflect the latest manifest version available in this guide. Newer manifest versions provide additional features only available on newer installations. Make sure to check this README for a guide on updating versions.
 - `music` - This determines whether your pack displays as music or Steam UI sound replacements.
 - `ignore` - This controls which Steam UI sound files will not be customized if creating a sound pack. This is necessary if not replacing all sounds.
+- `mappings` - This tells AudioLoader what sound files corrospond to each deck sound effect. Only available in manifest version 2 and above. This is not needed if you name your sound files the exact same as the deck's native sound effects.
 
 ## Adding sound files
 This is where the guide will split in two. If you are looking to add background music to the Steam UI, please read the **Music packs** section. If you are looking to replace existing Steam UI sounds, please read the **Sound packs** section.
@@ -102,7 +104,9 @@ Create a list of these file names as you will need to create a replacement or ad
 ]
 ```
 
-To replace a sound file, remove its entry from the above array and place a sound file with the exact file name (including file type) inside of your pack folder. Below is a list of what each sound file is believed to mean.
+To replace a sound file, remove its entry from the above array and place a sound file with the exact file name (including file type) inside of your pack folder. If you wish to use sound files that have different names and/or file extensions of the deck sound effects, see [Mappings](#mappings)
+
+Below is a list of what each sound file is believed to mean.
 - `bumper_end.wav` - Unknown or unused.
 - `confirmation_negative.wav` - Unknown or unused.
 - `confirmation_positive.wav` - Unknown or unused.
@@ -137,6 +141,19 @@ To replace a sound file, remove its entry from the above array and place a sound
 - `ui_steam_smoother_friend_join.m4a` - Unknown or unused.
 - `ui_steam_smoother_friend_online.m4a` - Unknown or unused.
 
+## Mappings
+Mappings are a feature that allow you to map a steam deck sound effect to one or more sound files. This allows for custom file names (and subfolders), multiple sound effects sharing a file, and for having multiple files per sound that can be randomized.
+```json
+"mappings": {
+    "deck_ui_toast.wav": ["folder1/my cool sound.mp3"],
+    "deck_ui_achievement_toast.wav": ["achievement1.mp3", "achievement2.wav", "achievement3.mp3"]
+}
+```
+If you wish to use mappings, your sound pack must use manifest version 2 or greater.
+
+For each entry in mappings, the object key is the name (including file extension) of the native deck sound that you wish to map, and it corrosponds to an array of strings that are the names of your sound files.
+If you wish to map a sound effect to more than one files, include them as entries in your array, and AudioLoader will randomly pick one each time the sound effect is played.
+
 ## Testing your pack
 Once you have completed creating your pack, upload the folder containing it to the `/home/deck/homebrew/sounds` folder. If the sounds folder does not exist, you may not have the Audio Loader plugin properly installed. Depending on the type of pack you created, you should be able to find it in the music or sounds dropdowns. Select your pack and test it by either testing the functionality of each sound or using the [Decky Playground Plugin](https://github.com/SteamDeckHomebrew/decky-playground).
 
@@ -162,3 +179,4 @@ Uploading your pack requires some basic Git knowledge. If you have trouble under
 
 # Support
 If you need any help creating or submitting a pack, please use [the Steam Deck Homebrew Discord server](https://discord.gg/ZU74G2NJzk). Please use the Audio Loader Support thread in the #support-plugins channel.
+
