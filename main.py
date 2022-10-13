@@ -106,7 +106,7 @@ if (UPLOAD_FILES):
 
 class MegaJson():
     def __init__(self):
-        self.megaJson = requests.get("https://github.com/EMERALD0874/AudioLoader-PackDB/releases/download/1.1.0/packs.json").json()
+        self.megaJson = requests.get("https://github.com/EMERALD0874/AudioLoader-PackDB/releases/download/1.2.0/packs.json").json()
 
     def getMegaJsonEntry(self, packId : str) -> dict:
         for x in self.megaJson:
@@ -222,24 +222,29 @@ class Repo:
     
     def get(self):
         tempDir = tempfile.TemporaryDirectory()
-        print(f"Cloning {self.repoReference.repoUrl} into {tempDir.name}...")
-        subprocess.run([
-            "git",
-            "clone",
-            self.repoReference.repoUrl,
-            tempDir.name
-        ], check=True)
+        if self.repoReference.repoUrl != "LOCAL":
+            print(f"Cloning {self.repoReference.repoUrl} into {tempDir.name}...")
+            subprocess.run([
+                "git",
+                "clone",
+                self.repoReference.repoUrl,
+                tempDir.name
+            ], check=True)
 
-        subprocess.run([
-            "git",
-            "-C",
-            tempDir.name,
-            "reset",
-            "--hard",
-            self.repoReference.repoCommit
-        ], check=True)
+            subprocess.run([
+                "git",
+                "-C",
+                tempDir.name,
+                "reset",
+                "--hard",
+                self.repoReference.repoCommit
+            ], check=True)
 
-        self.packPath = join(tempDir.name, self.repoReference.repoSubpath)
+            self.packPath = join(tempDir.name, self.repoReference.repoSubpath)
+        else:
+            shutil.copytree(self.repoReference.repoSubpath, join(tempDir.name, "pack"))
+            self.packPath = join(tempDir.name, "pack")
+
         packDataPath = join(self.packPath, "pack.json")
 
         if not os.path.exists(packDataPath):
@@ -285,6 +290,7 @@ class Repo:
         self.manifestVersion = int(json["manifest_version"]) if "manifest_version" in json else 1
         self.description = str(json["description"]) if "description" in json else ""
         self.ignore = str(json["ignore"]) if "ignore" in json else []
+        self.mappings = str(json["mappings"]) if "mappings" in json else []
 
     def verify(self):
         # Verify JSON was loaded
@@ -334,18 +340,29 @@ class Repo:
         # Make sure all entries in SOUND_FILES are present OR in self.ignore
         if self.music is False:
             for x in SOUND_FILES:
-                if (not os.path.exists(join(self.packPath, x)) and x not in self.ignore) or (os.path.exists(join(self.packPath, x)) and x in self.ignore):
-                    raise Exception(f"Pack is missing {x}.")
+                isInDirectory = os.path.exists(join(self.packPath, x))
+                isInIgnore = x in self.ignore
+                isInMappings = x in self.mappings
+                if (not isInDirectory and not isInIgnore and not isInMappings):
+                    raise Exception(f"Pack is missing {x}")
+                if (isInDirectory and isInIgnore):
+                    raise Exception(f"Duplicate entry: {x} is in ignore and is present as a file.")
+                if (isInDirectory and isInMappings):
+                    raise Exception(f"Duplicate entry: {x} is in mappings and is present as a file.")
+                if (isInIgnore and isInMappings):
+                    raise Exception(f"Duplicate entry: {x} is in ignore and mappings.")
         else:
             if not os.path.exists(join(self.packPath, "menu_music.mp3")):
                 raise Exception(f"Pack is missing menu_music.mp3.")
+            if (len(self.mappings) > 0):
+                raise Exception(f"Error: cannot use mappings in a music pack.")
 
 packs = []
 
 for x in files:
     path = join("./packs", x)
     print(f"Processing {path}...")
-    with open(path, "r") as fp:
+    with open(path, "r", encoding='utf-8') as fp:
         data = json.load(fp)
 
     reference = RepoReference(data, path)

@@ -23,21 +23,23 @@ To start, create a GitHub repository with a folder inside named after your pack.
   "description": "Use this field to describe the pack.",
   "author": "GitHubUsername",
   "version": "v1.0",
-  "manifest_version": 1,
+  "manifest_version": 2,
   "music": false,
-  "ignore": []
+  "ignore": [],
+  "mappings": {}
 }
 ```
 
 ## Editing pack.json
 Please follow these guidelines when changing variables inside your manifest.
 - `name` - This is a permanent name that should describe your pack or allude to how it sounds like. For example, calling a science-fiction pack and calling it "Medieval" will likely get denied.
-- `description` - This should describe your theme at a basic level. Try to include where you obtained your audio from or the feeling it conveys.
+- `description` - This should describe your pack at a basic level. Try to include where you obtained your audio from or the feeling it conveys.
 - `author` -  This can be any name. We recommend using your GitHub username so users can easily report an issue if needed.
-- `version` - This should follow the format of `v{MAJOR}.{MINOR}`. Major updates are usually new inclusions to the theme that help complete it. Minor updates are usually updates to poor or unintentionally missing audio or adding support for a new version of SteamOS.
+- `version` - This should follow the format of `v{MAJOR}.{MINOR}`. Major updates are usually new inclusions to the pack that help complete it. Minor updates are usually updates to poor or unintentionally missing audio or adding support for a new version of SteamOS.
 - `manifest_version` - This should always reflect the latest manifest version available in this guide. Newer manifest versions provide additional features only available on newer installations. Make sure to check this README for a guide on updating versions.
-- `music` - This determines whether your pack displays as music or Steam UI sound replacements. At the time of writing this guide, music is not supported and is planned for a future update.
+- `music` - This determines whether your pack displays as music or Steam UI sound replacements.
 - `ignore` - This controls which Steam UI sound files will not be customized if creating a sound pack. This is necessary if not replacing all sounds.
+- `mappings` - This tells AudioLoader what sound files corrospond to each deck sound effect. Only available in manifest version 2 and above. This is not needed if you name your sound files the exact same as the deck's native sound effects.
 
 ## Adding sound files
 This is where the guide will split in two. If you are looking to add background music to the Steam UI, please read the **Music packs** section. If you are looking to replace existing Steam UI sounds, please read the **Sound packs** section.
@@ -102,7 +104,9 @@ Create a list of these file names as you will need to create a replacement or ad
 ]
 ```
 
-To replace a sound file, remove its entry from the above array and place a sound file with the exact file name (including file type) inside of your pack folder. Below is a list of what each sound file is believed to mean.
+To replace a sound file, remove its entry from the above array and place a sound file with the exact file name (including file type) inside of your pack folder. If you wish to use sound files that have different names and/or file extensions of the deck sound effects, see [Mappings](#mappings)
+
+Below is a list of what each sound file is believed to mean.
 - `bumper_end.wav` - Unknown or unused.
 - `confirmation_negative.wav` - Unknown or unused.
 - `confirmation_positive.wav` - Unknown or unused.
@@ -137,6 +141,19 @@ To replace a sound file, remove its entry from the above array and place a sound
 - `ui_steam_smoother_friend_join.m4a` - Unknown or unused.
 - `ui_steam_smoother_friend_online.m4a` - Unknown or unused.
 
+## Mappings
+Mappings are a feature that allow you to map a steam deck sound effect to one or more sound files. This allows for custom file names (and subfolders), multiple sound effects sharing a file, and for having multiple files per sound that can be randomized.
+```json
+"mappings": {
+    "deck_ui_toast.wav": ["folder1/my cool sound.mp3"],
+    "deck_ui_achievement_toast.wav": ["achievement1.mp3", "achievement2.wav", "achievement3.mp3"]
+}
+```
+If you wish to use mappings, your sound pack must use manifest version 2 or greater.
+
+For each entry in mappings, the object key is the name (including file extension) of the native deck sound that you wish to map, and it corrosponds to an array of strings that are the names of your sound files.
+If you wish to map a sound effect to more than one files, include them as entries in your array, and AudioLoader will randomly pick one each time the sound effect is played.
+
 ## Testing your pack
 Once you have completed creating your pack, upload the folder containing it to the `/home/deck/homebrew/sounds` folder. If the sounds folder does not exist, you may not have the Audio Loader plugin properly installed. Depending on the type of pack you created, you should be able to find it in the music or sounds dropdowns. Select your pack and test it by either testing the functionality of each sound or using the [Decky Playground Plugin](https://github.com/SteamDeckHomebrew/decky-playground).
 
@@ -144,7 +161,7 @@ Once you have completed creating your pack, upload the folder containing it to t
 Uploading your pack requires some basic Git knowledge. If you have trouble understanding the instructions below, feel free to reach out to us or another developer familiar with Git for support.
 1. Create a fork of this repository. You can do this using the Fork button at the top-right corner.
 1. (Optional) Create and upload a square JPG preview image in `/images/{AUTHOR}`.
-1. Create and upload a JSON file in `/themes` titled `{AUTHOR}-{PACK_NAME}.json` that follows this template.
+1. Create and upload a JSON file in `/packs` titled `{AUTHOR}-{PACK_NAME}.json` that follows this template.
 ```json
 {
   "repo_url": "https://github.com/AuthorGoesHere/RepoNameGoesHere",
@@ -162,3 +179,4 @@ Uploading your pack requires some basic Git knowledge. If you have trouble under
 
 # Support
 If you need any help creating or submitting a pack, please use [the Steam Deck Homebrew Discord server](https://discord.gg/ZU74G2NJzk). Please use the Audio Loader Support thread in the #support-plugins channel.
+
