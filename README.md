@@ -19,7 +19,7 @@ Development for the Audio Loader is intended to be as simple as possible. That b
 
 ### 📋 Prerequisites
 
-- Audio Loader installed on a Steam Deck (or compatible device running the Steam Deck UI)
+- Audio Loader installed on a Steam Deck (or a compatible device running the Steam Deck UI)
 - Basic audio editing and JSON knowledge
 - Audio files to use in a pack
 - (Optional) SSH enabled on your Steam Deck
@@ -59,7 +59,7 @@ Please follow these guidelines when changing variables inside your manifest.
 - `manifest_version` - This should always reflect the latest manifest version available in this guide. Newer manifest versions provide additional features only available on newer installations. Make sure to check this README for a guide on updating versions.
 - `music` - This determines whether your pack displays as music or Steam UI sound replacements.
 - `ignore` - This controls which Steam UI sound files will not be customized if creating a sound pack. This is necessary if not replacing all sounds.
-- `mappings` - This tells AudioLoader what sound files corrospond to each deck sound effect. Only available in manifest version 2 and above. This is not needed if you name your sound files the exact same as the deck's native sound effects.
+- `mappings` - This determines what sound files correspond to each Steam UI sound. This is not needed if you name your sound files the same as the Steam UI sounds. This feature requires manifest version 2 or higher.
 
 ### 🎵 Adding Audio Files
 
@@ -69,7 +69,7 @@ This is where the guide will split in two. If you are looking to add background 
 
 Music packs are background tracks for the Steam UI. Whenever a user does not have an application running, the active music pack will play indefinitely until an application is launched.
 
-When creating a music pack, the first thing you should always have in mind is that this is a background track, not a general music player. Consider using ambience and instrumental songs rather than heavy hitting songs or anything with lyrics. Exceptions can be made but they shouldn't be expected.
+When creating a music pack, the first thing you should always have in mind is that this is a background track, not a general music player. Consider using ambiance and instrumental songs rather than heavy-hitting songs or anything with lyrics. Exceptions can be made but they shouldn't be expected.
 
 Once you have found a song that you want to use for your pack, make the following changes to your `pack.json`.
 
@@ -84,7 +84,7 @@ Next, find an audio file for the song you would like to use. Using an audio edit
   - Keep in mind that your music pack will be denied if sound packs cannot be heard over it.
 - Save your song as `menu_music.mp3` in your pack directory. In Audacity, select File, Export, and Export as MP3.
 
-When uploading your music pack, please try to use the cover art for the album you retrieved the song from (more info about this below). For a video game, this should be the cover of the original soundtrack and not the box art for the game itself.
+When uploading your music pack, please try to use the cover art for the album you retrieved the song from (more info about this is below). For a video game, this should be the cover of the original soundtrack and not the box art for the game itself.
 
 #### 🔊 Sound Packs
 
@@ -130,7 +130,7 @@ Create a list of these file names as you will need to create a replacement or ad
 ]
 ```
 
-To replace a sound file, remove its entry from the above array and place a sound file with the exact file name (including file type) inside of your pack folder. If you wish to use sound files that have different names and/or file extensions of the deck sound effects, see [Mappings](#mappings)
+To replace a sound file, remove its entry from the above array and place a sound file with the exact file name (including file type) inside of your pack folder. If you wish to use sound files that have different names or file extensions than the Steam UI sounds, see [🎲 Mappings and Randomization](#-mappings-and-randomization).
 
 Below is a list of what each sound file is believed to mean.
 
@@ -170,7 +170,7 @@ Below is a list of what each sound file is believed to mean.
 
 ### 🎲 Mappings and Randomization
 
-Mappings are a feature that allow you to map a steam deck sound effect to one or more sound files. This allows for custom file names (and subfolders), multiple sound effects sharing a file, and for having multiple files per sound that can be randomized.
+Mapping is a feature that allows you to map a Steam UI sound to one or more sound files. This allows for custom file names, subfolders, multiple sounds sharing a file, and multiple files per sound that are picked at random. If you wish to use mapping, your sound pack must use manifest version 2 or higher.
 
 ```json
 "mappings": {
@@ -179,10 +179,7 @@ Mappings are a feature that allow you to map a steam deck sound effect to one or
 }
 ```
 
-If you wish to use mappings, your sound pack must use manifest version 2 or greater.
-
-For each entry in mappings, the object key is the name (including file extension) of the native deck sound that you wish to map, and it corrosponds to an array of strings that are the names of your sound files.
-If you wish to map a sound effect to more than one files, include them as entries in your array, and AudioLoader will randomly pick one each time the sound effect is played.
+For each entry in mappings, the object key is the file name (including the file extension) of the Steam UI sound that you wish to map and the value is an array of strings for the names of your sound files. If you wish to map a sound to more than one file, include them as entries in your array, and Audio Loader will randomly pick one each time the sound is played.
 
 ### 🧪 Testing
 
