@@ -48,7 +48,7 @@ To start, create a GitHub repository with a folder inside named after your pack.
 }
 ```
 
-### 📝 Editing pack.json
+### ✍️ Editing pack.json
 
 Please follow these guidelines when changing variables inside your manifest.
 
@@ -185,9 +185,35 @@ For each entry in mappings, the object key is the file name (including the file 
 
 Once you have completed creating your pack, upload the folder containing it to the `/home/deck/homebrew/sounds` folder. If the sounds folder does not exist, you may not have the Audio Loader plugin properly installed. Depending on the type of pack you created, you should be able to find it in the music or sounds dropdowns. Select your pack and test it by either testing the functionality of each sound or using the [Decky Playground Plugin](https://github.com/SteamDeckHomebrew/decky-playground).
 
-## 📨 Uploading a Pack (optional)
+## 📨 Uploading a Pack
 
 Uploading your pack requires some basic Git knowledge. If you have trouble understanding the instructions below, feel free to reach out to us or another developer familiar with Git for support.
+
+### ☑️ Requirements
+
+These requirements must be followed for all packs.
+
+- You are the original author of the pack or have permission from the original author to make a pull request
+- All copyright of the pack's contents belong to the listed author or are cited in the description and repository linked in the pull request
+- The pack works properly on the latest versions of SteamOS for Steam Deck, [Decky Loader](https://github.com/SteamDeckHomebrew/decky-loader), and [Audio Loader](https://github.com/EMERALD0874/SDH-AudioLoader)
+- The pack is under 10MB in size and uses the least disk space possible
+- The pack is safe for work and does not contain any sexual, drug-related, or profane content
+- The pack does not contain loud, distorted, or otherwise bad-faith sound files
+- The pack is only for either music or sounds and only adds or modifies the intended sound files
+
+#### 🎼 Music Requirements
+
+All music packs with copyrighted content that do not meet one of the following criteria will most likely be denied. If you are unsure whether your music pack meets one of these criteria, [please reach out to us](#-support).
+
+- Original compositions and performances
+- Copyright-free and public-domain performances
+- Songs with explicit permission from the original author
+- Songs from other console firmware menus\*
+- Other exceptions made by the development team
+
+\*_Console firmware songs must still be approved by repository maintainers. Unnecessary songs and songs from first-party applications (ex. Wii Shop, Nintendo eShop) may be denied._
+
+### 📝 Creating a Pull Request
 
 1. Create a fork of this repository. You can do this using the Fork button at the top-right corner.
 1. (Optional) Create and upload a square JPG preview image in `/images/{AUTHOR}`.
