@@ -162,11 +162,11 @@ Below is a list of what each sound file is believed to mean.
 - `deck_ui_typing.wav` - Played when typing on the keyboard.
 - `deck_ui_volume.wav` - Played when confirming the volume setting in Settings.
 - `pop_sound.wav` - Unknown or unused.
-- `steam_at_mention.m4a` - Unknown or unused.
-- `steam_chatroom_notification.m4a` - Unknown or unused.
-- `ui_steam_message_old_smooth.m4a` - Played when receiving a chat message.
-- `ui_steam_smoother_friend_join.m4a` - Unknown or unused.
-- `ui_steam_smoother_friend_online.m4a` - Unknown or unused.
+- `steam_at_mention.m4a` - Played when mentioned in a group chat.
+- `steam_chatroom_notification.m4a` - Played when receiving a group chat message.
+- `ui_steam_message_old_smooth.m4a` - Played when receiving a private chat message.
+- `ui_steam_smoother_friend_join.m4a` - Played when a friend runs a game or software.
+- `ui_steam_smoother_friend_online.m4a` - Played when a friend goes online on Steam.
 
 ### 🎲 Mappings and Randomization
 
