@@ -289,8 +289,8 @@ class Repo:
         self.music = bool(json["music"]) if "music" in json else self.music
         self.manifestVersion = int(json["manifest_version"]) if "manifest_version" in json else 1
         self.description = str(json["description"]) if "description" in json else ""
-        self.ignore = str(json["ignore"]) if "ignore" in json else []
-        self.mappings = str(json["mappings"]) if "mappings" in json else []
+        self.ignore = list(json["ignore"]) if "ignore" in json else []
+        self.mappings = dict(json["mappings"]) if "mappings" in json else {}
 
     def verify(self):
         # Verify JSON was loaded
@@ -352,10 +352,12 @@ class Repo:
                 if (isInIgnore and isInMappings):
                     raise Exception(f"Duplicate entry: {x} is in ignore and mappings.")
         else:
-            if not os.path.exists(join(self.packPath, "menu_music.mp3")):
-                raise Exception(f"Pack is missing menu_music.mp3.")
-            if (len(self.mappings) > 0):
-                raise Exception(f"Error: cannot use mappings in a music pack.")
+            isInDirectory = os.path.exists(join(self.packPath, "menu_music.mp3"))
+            isInMappings = "menu_music.mp3" in self.mappings
+            if (not isInDirectory and not isInMappings):
+                raise Exception(f"Pack is missing menu_music.mp3 and has no mapping to another file.")
+            if (isInDirectory and isInMappings):
+                raise Exception(f"Duplicate entry: menu_music.mp3 is in mappings and present as a file")
 
 packs = []
 
