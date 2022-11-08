@@ -1,0 +1,10 @@
+{
+  "name": "Slime Rancher - Dry Reef",
+  "description": "Dry Reef from Slime Rancher, by Harry Mack.",
+  "author": "IkBenAnders",
+  "version": "v1.1",
+  "manifest_version": 2,
+  "music": true,
+  "ignore": [],
+  "mappings": {}
+}
