@@ -1,3 +1,6 @@
+# Audio Loader has moved!!
+Please use https://deckthemes.com/ for Audio Loader submissions.
+
 <h1 align="center">
   <img src="./docs/images/logo.png#gh-light-mode-only" alt="Audio Loader logo" width="200"><img src="./docs/images/logo_white.png#gh-dark-mode-only" alt="Audio Loader logo" width="200">
   <br>
